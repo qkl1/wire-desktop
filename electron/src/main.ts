@@ -135,7 +135,7 @@ const initWindowStateKeeper = () => {
 };
 
 // App Windows
-const showMainWindow = (mainWindowState: WindowStateKeeper.State) => {
+const showMainWindow = async (mainWindowState: WindowStateKeeper.State) => {
   const showMenuBar = settings.restore(SettingsType.SHOW_MENU_BAR, true);
 
   const options: Electron.BrowserWindowConstructorOptions = {
@@ -166,7 +166,7 @@ const showMainWindow = (mainWindowState: WindowStateKeeper.State) => {
   checkConfigV0FullScreen(mainWindowState);
 
   const baseURL = `${BASE_URL}${BASE_URL.includes('?') ? '&' : '?'}hl=${locale.getCurrent()}`;
-  main.loadURL(`${fileUrl(INDEX_HTML)}?env=${encodeURIComponent(baseURL)}`);
+  await main.loadURL(`${fileUrl(INDEX_HTML)}?env=${encodeURIComponent(baseURL)}`);
 
   if (argv.devtools) {
     main.webContents.openDevTools({mode: 'detach'});
@@ -196,7 +196,7 @@ const showMainWindow = (mainWindowState: WindowStateKeeper.State) => {
       return;
     }
 
-    shell.openExternal(_url);
+    shell.openExternalSync(_url);
   });
 
   main.webContents.on('dom-ready', () => {
@@ -251,7 +251,7 @@ const handleAppEvents = () => {
   });
 
   // System Menu & Tray Icon & Show window
-  app.on('ready', () => {
+  app.on('ready', async () => {
     const mainWindowState = initWindowStateKeeper();
     const appMenu = systemMenu.createMenu(isFullScreen);
     if (environment.app.IS_DEVELOPMENT) {
@@ -263,7 +263,7 @@ const handleAppEvents = () => {
     if (!environment.platform.IS_MAC_OS) {
       tray.initTray();
     }
-    showMainWindow(mainWindowState);
+    await showMainWindow(mainWindowState);
   });
 };
 
@@ -381,20 +381,21 @@ class ElectronWrapperInit {
           // Override remote Access-Control-Allow-Origin for localhost (CORS bypass)
           const isLocalhostEnvironment = environment.getEnvironment() == environment.BackendType.LOCALHOST;
           if (isLocalhostEnvironment) {
-            contents.session.webRequest.onHeadersReceived(
-              {
-                urls: config.BACKEND_ORIGINS.map(value => `${value}/*`),
-              },
-              (details: OnHeadersReceivedDetails, callback: OnHeadersReceivedCallback) => {
-                details.responseHeaders['Access-Control-Allow-Origin'] = ['http://localhost:8081'];
-                details.responseHeaders['Access-Control-Allow-Credentials'] = ['true'];
+            const filter = {
+              urls: config.BACKEND_ORIGINS.map(value => `${value}/*`),
+            };
 
-                callback({
-                  cancel: false,
-                  responseHeaders: details.responseHeaders,
-                });
-              }
-            );
+            const listener = (details: OnHeadersReceivedDetails, callback: OnHeadersReceivedCallback) => {
+              details.responseHeaders['Access-Control-Allow-Origin'] = ['http://localhost:8081'];
+              details.responseHeaders['Access-Control-Allow-Credentials'] = ['true'];
+
+              callback({
+                cancel: false,
+                responseHeaders: details.responseHeaders,
+              });
+            };
+
+            contents.session.webRequest.onHeadersReceived(filter, listener as any);
           }
 
           contents.on('before-input-event', (event, input) => {
