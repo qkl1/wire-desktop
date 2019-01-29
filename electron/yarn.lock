@@ -73,7 +73,12 @@
   resolved "https://registry.yarnpkg.com/@types/minimist/-/minimist-1.2.0.tgz#69a23a3ad29caf0097f06eda59b361ee2f0639f6"
   integrity sha1-aaI6OtKcrwCX8G7aWbNh7i8GOfY=
 
-"@types/node@*", "@types/node@10.12.18":
+"@types/node@*", "@types/node@10.12.19":
+  version "10.12.19"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.12.19.tgz#ca1018c26be01f07e66ac7fefbeb6407e4490c61"
+  integrity sha512-2NVovndCjJQj6fUUn9jCgpP4WSqr+u1SoUZMZyJkhGeBFsm6dE46l31S7lPUYt9uQ28XI+ibrJA1f5XyH5HNtA==
+
+"@types/node@10.12.18":
   version "10.12.18"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.12.18.tgz#1d3ca764718915584fcd9f6344621b7672665c67"
   integrity sha512-fh+pAqt4xRzPfqA6eh3Z2y6fyZavRIumvjhaCL753+TVkGKGhpPeyrJG2JftD0T9q4GF00KjefsQ+PQNDdWQaQ==
@@ -112,10 +117,10 @@
   dependencies:
     jsrsasign "8.0.12"
 
-"@wireapp/commons@1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@wireapp/commons/-/commons-1.0.2.tgz#7d3a7f8b1b012551055c14edc6f04c42b801995c"
-  integrity sha512-lPBFo9MOLnQRIMIdn0trApLCCbEWQXWSIYDMiXiWIS1HRjTsB38o6qU2D105NslKgzZbwJSnPuoWFdu3e4tr5A==
+"@wireapp/commons@1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@wireapp/commons/-/commons-1.0.3.tgz#04925f5f0efc92859e79f8a9747881d56171e113"
+  integrity sha512-jl8ZuHmX4z28zGbXEgoRJUp3a294bqN2A/QGo3EmztvsEKQsRQrPqt2m5aAS+nMdHP4vcSrQOowxid82u1uJZg==
   dependencies:
     "@types/ansi-regex" "4.0.0"
     "@types/node" "10.12.18"
@@ -123,7 +128,7 @@
     ansi-regex "4.0.0"
     fs-extra "7.0.1"
     logdown "3.2.7"
-    moment "2.23.0"
+    moment "2.24.0"
     platform "1.3.5"
 
 abbrev@1:
@@ -720,11 +725,11 @@ has-unicode@^2.0.0:
   integrity sha1-4Ob+aijPUROIVeCG0Wkedx3iqLk=
 
 hoist-non-react-statics@^3.2.1:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.2.1.tgz#c09c0555c84b38a7ede6912b61efddafd6e75e1e"
-  integrity sha512-TFsu3TV3YLY+zFTZDrN8L2DTFanObwmBLpWvJs1qfUuEQ5bTAdFcwfx2T/bsCXfM9QHSLvjfP+nihEl0yvozxw==
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.3.0.tgz#b09178f0122184fb95acf525daaecb4d8f45958b"
+  integrity sha512-0XsbTXxgiaCDYDIWFcwkmerZPSwywfUqYmwT4jzewKTQSWoE6FCMoUVOeBJWK3E/CrWbxRG3m5GzY4lnIwGRBA==
   dependencies:
-    react-is "^16.3.2"
+    react-is "^16.7.0"
 
 hosted-git-info@^2.1.4:
   version "2.7.1"
@@ -1042,11 +1047,6 @@ minimist@1.2.0:
   dependencies:
     minimist "0.0.8"
 
-moment@2.23.0:
-  version "2.23.0"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.23.0.tgz#759ea491ac97d54bac5ad776996e2a58cc1bc225"
-  integrity sha512-3IE39bHVqFbWWaPOMHZF98Q9c3LDKGTmypMiTM2QygGXXElkFWIH7GxfmlwmY2vwa+wmNsoYZmG2iusf1ZjJoA==
-
 moment@2.24.0:
   version "2.24.0"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
@@ -1082,9 +1082,9 @@ nock@~8:
     qs "^6.0.2"
 
 node-abi@^2.0.0:
-  version "2.5.1"
-  resolved "https://registry.yarnpkg.com/node-abi/-/node-abi-2.5.1.tgz#bb17288fc3b2f68fea0ed9897c66979fd754ed47"
-  integrity sha512-oDbFc7vCFx0RWWCweTer3hFm1u+e60N5FtGnmRV6QqvgATGFH/XRR6vqWIeBVosCYCqt6YdIr2L0exLZuEdVcQ==
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/node-abi/-/node-abi-2.6.0.tgz#3adc69b28b334a0556fbadca378c7d18b8c82397"
+  integrity sha512-kCnEh6af6Z6DB7RFI/7LHNwqRjvJW7rgrv3lhIFoQ/+XhLPI/lJYwsk5vzvkldPWWgqnAMcuPF5S8/jj56kVOA==
   dependencies:
     semver "^5.4.1"
 
@@ -1350,7 +1350,7 @@ react-dom@16.7.0:
     prop-types "^15.6.2"
     scheduler "^0.12.0"
 
-react-is@^16.3.2, react-is@^16.6.3:
+react-is@^16.6.3, react-is@^16.7.0:
   version "16.7.0"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.7.0.tgz#c1bd21c64f1f1364c6f70695ec02d69392f41bfa"
   integrity sha512-Z0VRQdF4NPDoI0tsXVMLkJLiwEBa+RP66g0xDHxgxysxSoCUccSten4RTF/UFvZF1dZvZ9Zu1sx+MDXwcOR34g==
@@ -1585,9 +1585,9 @@ spdx-license-ids@^3.0.0:
   integrity sha512-uBIcIl3Ih6Phe3XHK1NqboJLdGfwr1UN3k6wSD1dZpmPsIkb8AGNbZYJ1fOBk834+Gxy8rpfDxrS6XLEMZMY2g==
 
 sshpk@^1.7.0:
-  version "1.16.0"
-  resolved "https://registry.yarnpkg.com/sshpk/-/sshpk-1.16.0.tgz#1d4963a2fbffe58050aa9084ca20be81741c07de"
-  integrity sha512-Zhev35/y7hRMcID/upReIvRse+I9SVhyVre/KTJSJQWMz3C3+G+HpO7m1wK/yckEtujKZ7dS4hkVxAnmHaIGVQ==
+  version "1.16.1"
+  resolved "https://registry.yarnpkg.com/sshpk/-/sshpk-1.16.1.tgz#fb661c0bef29b39db40769ee39fa70093d6f6877"
+  integrity sha512-HXXqVUq7+pcKeLqqZj6mHFUMvXtOJt1uoUx09pFW6011inTMxqI8BA8PM95myrIyyKwdnzjdFjLiE6KBPVtJIg==
   dependencies:
     asn1 "~0.2.3"
     assert-plus "^1.0.0"
