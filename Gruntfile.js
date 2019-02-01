@@ -48,17 +48,29 @@ module.exports = function(grunt) {
   require('load-grunt-tasks')(grunt, {pattern: ['grunt-*']});
 
   const baseData = grunt.file.readJSON(INFO_JSON);
+  baseData.adminUrl = process.env.APP_URL_ADMIN || baseData.adminUrl;
   baseData.appBase = process.env.APP_BASE || baseData.appBase;
   baseData.bundleId = process.env.APP_BUNDLE_ID || baseData.bundleId;
   baseData.copyright = process.env.APP_COPYRIGHT || baseData.copyright;
   baseData.description = process.env.APP_DESCRIPTION || baseData.description;
+  baseData.developerId = process.env.APP_DEVELOPER_ID || baseData.developerId;
+  baseData.developerName = process.env.APP_DEVELOPER_NAME || baseData.developerName;
   baseData.installerIconUrl = process.env.APP_URL_ICON_INSTALLER || baseData.installerIconUrl;
+  baseData.legalUrl = process.env.APP_URL_LEGAL || baseData.legalUrl;
+  baseData.licensesUrl = process.env.APP_URL_LICENSES || baseData.licensesUrl;
   baseData.maximumAccounts = Number(process.env.APP_MAXIMUM_ACCOUNTS) || baseData.maximumAccounts;
   baseData.name = process.env.APP_NAME || baseData.name;
   baseData.nameShort = process.env.APP_SHORT_NAME || baseData.nameShort;
+  baseData.privacyUrl = process.env.APP_URL_PRIVACY || baseData.privacyUrl;
   baseData.supportUrl = process.env.APP_URL_SUPPORT || baseData.supportUrl;
   baseData.updateWinUrlCustom = process.env.APP_URL_UPDATE_WIN || baseData.updateWinUrlProd;
   baseData.websiteUrl = process.env.APP_URL_WEBSITE || baseData.websiteUrl;
+
+  baseData.sign = {
+    app: `3rd Party Mac Developer Application: ${baseData.developerName} (${baseData.developerId})`,
+    internal: `Developer ID Application: ${baseData.developerNameInternal} (${baseData.developerIdInternal})`,
+    package: `3rd Party Mac Developer Installer: ${baseData.developerName} (${baseData.developerId})`,
+  };
 
   grunt.initConfig({
     buildNumber: process.env.BUILD_NUMBER || '0',
@@ -121,10 +133,10 @@ module.exports = function(grunt) {
     electron: {
       macos_custom: {
         options: {
-          appBundleId: baseData.bundleId,
+          appBundleId: '<%= info.bundleId %>',
           appCategoryType: 'public.app-category.social-networking',
           extendInfo: 'resources/macos/custom.plist',
-          helperBundleId: `${baseData.bundleId}.helper`,
+          helperBundleId: '<%= info.bundleId %>.helper',
           icon: 'resources/macos/wire.icns',
           platform: 'mas',
         },
@@ -350,17 +362,29 @@ module.exports = function(grunt) {
     grunt.log.write(`App description set to "${baseData.description}". `).ok();
     grunt.log.write(`App bundle ID set to "${baseData.bundleId}". `).ok();
     grunt.log.write(`App copyright set to "${baseData.copyright}". `).ok();
-    grunt.log.write(`Website set to "${baseData.websiteUrl}". `).ok();
+    grunt.log.write(`Website URL set to "${baseData.websiteUrl}". `).ok();
+    grunt.log.write(`Admin URL set to "${baseData.adminUrl}". `).ok();
+    grunt.log.write(`Legal URL set to "${baseData.legalUrl}". `).ok();
+    grunt.log.write(`Licenses URL set to "${baseData.licensesUrl}". `).ok();
+    grunt.log.write(`Privacy URL set to "${baseData.privacyUrl}". `).ok();
     grunt.log.write(`Support website set to "${baseData.supportUrl}". `).ok();
     grunt.log.write(`Maximum accounts set to "${baseData.maximumAccounts}". `).ok();
-    grunt.log.write(`Installer icon URL set to "${baseData.installerIconUrl}". `).ok();
+    grunt.log.write(`Windows installer icon URL set to "${baseData.installerIconUrl}". `).ok();
+    grunt.log.write(`Windows update URL set to ${baseData.updateWinUrlCustom} `).ok();
+    grunt.log.write(`Developer app info set to "${baseData.sign.app}". `).ok();
+    grunt.log.write(`Developer package info set to "${baseData.sign.package}". `).ok();
 
     let customPlist = grunt.file.read(MACOS_CUSTOM_PLIST);
-    customPlist = customPlist.replace(/Wire/gm, baseData.name);
+    customPlist = customPlist
+      .replace(/Wire/gm, baseData.name)
+      .replace(/(<key>ElectronTeamID<\/key>\n\s*<string>)[^<]+(<\/string>)/m, `$1${baseData.developerId}$2`);
     grunt.file.write(MACOS_CUSTOM_PLIST, customPlist);
 
     let parentPlist = grunt.file.read(MACOS_PARENT_PLIST);
-    parentPlist = parentPlist.replace(/com\.wearezeta\.zclient\.mac/gm, baseData.bundleId);
+    parentPlist = parentPlist.replace(
+      /(<key>com\.apple\.security\.application-groups<\/key>\n\s*<string>)[^<]+(<\/string>)/m,
+      `$1${baseData.developerId}.${baseData.bundleId}$2`
+    );
     grunt.file.write(MACOS_PARENT_PLIST, parentPlist);
   });
 
@@ -400,11 +424,15 @@ module.exports = function(grunt) {
     const buildNumber = grunt.config.get('buildNumber');
     const commitId = grunt.config('gitinfo.local.branch.current.shortSHA');
     const electronPkg = grunt.file.readJSON(ELECTRON_PACKAGE_JSON);
+    electronPkg.adminUrl = info.adminUrl;
     electronPkg.appBase = info.appBase;
     electronPkg.copyright = info.copyright;
     electronPkg.environment = 'production';
+    electronPkg.legalUrl = info.legalUrl;
+    electronPkg.licensesUrl = info.licensesUrl;
     electronPkg.maximumAccounts = info.maximumAccounts;
     electronPkg.name = info.nameShort.toLowerCase();
+    electronPkg.privacyUrl = info.privacyUrl;
     electronPkg.productName = info.name;
     electronPkg.supportUrl = info.supportUrl;
     electronPkg.updateWinUrl = info.updateWinUrlCustom;
